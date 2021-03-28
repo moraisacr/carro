@@ -1,4 +1,4 @@
-package com.ti2cc;
+package Bancocarro;
 
 public class Principal {
 	
@@ -7,41 +7,57 @@ public class Principal {
 		DAO dao = new DAO();
 		
 		dao.conectar();
+        int opcao = 0;
+    do{
+		System.out.println("\n                 =========================");
+		System.out.println("                  |     1 - Listar         |");
+        System.out.println("                  |     2 - Inserir        |");
+		System.out.println("                  |     3 - Exluir         |");
+        System.out.println("                  |     4 - Atualizar      |");
+		System.out.println("                  |     0 - Sair           |");
+		System.out.println("                   =========================\n");
 
-		
-		//Inserir um elemento na tabela
-		Usuario usuario = new Usuario(11, "pablo", "pablo",'M');
-		if(dao.inserirUsuario(usuario) == true) {
-			System.out.println("Inserção com sucesso -> " + usuario.toString());
-		}
-		
-		//Mostrar usuários do sexo masculino		
-		System.out.println("==== Mostrar usuários do sexo masculino === ");
-		Usuario[] usuarios = dao.getUsuariosMasculinos();
-		for(int i = 0; i < usuarios.length; i++) {
-			System.out.println(usuarios[i].toString());
-		}
+        opcao = Console.readInt("Opção -> ");
+		System.out.print("\n");
 
-		//Atualizar usuário
-		usuario.setSenha("nova senha");
-		dao.atualizarUsuario(usuario);
+		switch (opcao) {
+		case 1:
 
-		//Mostrar usuários do sexo masculino
-		System.out.println("==== Mostrar usuários === ");
-		usuarios = dao.getUsuarios();
-		for(int i = 0; i < usuarios.length; i++) {
-			System.out.println(usuarios[i].toString());
+                System.out.println("==== Mostrar carros === ");
+                carros = dao.getCarros();
+                for(int i = 0; i < carros.length; i++) {
+                    System.out.println(carros[i].toString());
+                }
+
+			break;
+		case 2:
+            Carro carro = new Carro(2021, "branco", "uno","fiat");
+            if(dao.inserirCarro(carro) == true) {
+                System.out.println("Inserção com sucesso -> " + carro.toString());
+            }
+			break;
+
+        case 3:
+            //Excluir Ano
+            dao.excluirCarro(carro.getAno());
+			break;    
+                   
+		case 4:
+
+            //Atualizar carro
+            carro.setModelo("novo modelo");
+            dao.atualizarCarro(carro);
+			break;
+
+		case 0:
+			break;
+		default:
+			System.out.println("Opção Inválida!");
+			break;
 		}
-		
-		//Excluir usuário
-		dao.excluirUsuario(usuario.getCodigo());
-		
-		//Mostrar usuários
-		usuarios = dao.getUsuarios();
-		System.out.println("==== Mostrar usuários === ");		
-		for(int i = 0; i < usuarios.length; i++) {
-			System.out.println(usuarios[i].toString());
-		}
+	} while (opcao != 0);
+
+
 		
 		dao.close();
 	}
